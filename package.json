@@ -1,7 +1,7 @@
 {
-  "name": "simple-base-theme",
+  "name": "xcillion-b3",
   "version": "0.0.2",
-  "description": "A dnn based theme",
+  "description": "Xcillion-B3 - DNN theme with Bootstrap 3",
   "scripts": {
     "start": "gulp --gulpfile _build/gulpfile.js",
     "build": "gulp build --gulpfile _build/gulpfile.js"
