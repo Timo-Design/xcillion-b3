@@ -3,7 +3,7 @@
  */
 
 const del = require('del');
-const { distFolder, skinTarget, containerTarget } = require('../helpers');
+const { distFolder, distSkinPath, distContainerPath, skinTarget, containerTarget } = require('../helpers');
 const { config } = require('../config');
 
 const targetPaths = config.targetPaths || [];
@@ -13,6 +13,20 @@ const targetPaths = config.targetPaths || [];
  */
 function cleanDist() {
   return del([`${distFolder}/**`], { force: true });
+}
+
+/**
+ * Clean dist skin folder
+ */
+function cleanDistSkins() {
+  return del([`${distSkinPath()}/**`], { force: true });
+}
+
+/**
+ * Clean dist container folder
+ */
+function cleanDistContainers() {
+  return del([`${distContainerPath()}/**`], { force: true });
 }
 
 /**
@@ -33,6 +47,8 @@ function cleanContainers() {
 
 module.exports = {
   cleanDist,
+  cleanDistSkins,
+  cleanDistContainers,
   cleanSkins,
   cleanContainers,
 };
