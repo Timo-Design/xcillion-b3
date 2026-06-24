@@ -41,9 +41,12 @@ function distributeContainers() {
  */
 function distributeCss() {
   if (targetPaths.length === 0) return Promise.resolve();
+  const parsePath = config.parsePath || '';
+  const srcPath = parsePath ? `${distFolder}/Skins/${themeName}/${parsePath}/skin.css` : `${distFolder}/Skins/${themeName}/skin.css`;
+  const destSuffix = parsePath ? `/${parsePath}` : '';
   return targetPaths.reduce((stream, basePath) => {
-    return stream.pipe(dest(skinTarget(basePath)));
-  }, src(`${distFolder}/Skins/${themeName}/skin.css`, { encoding: false }));
+    return stream.pipe(dest(`${skinTarget(basePath)}${destSuffix}`));
+  }, src(srcPath, { encoding: false }));
 }
 
 /**
@@ -51,9 +54,13 @@ function distributeCss() {
  */
 function distributeJs() {
   if (targetPaths.length === 0) return Promise.resolve();
+  const parsePath = config.parsePath || '';
+  const jsOutputFile = config.jsOutputFile || 'skin.js';
+  const srcPath = parsePath ? `${distFolder}/Skins/${themeName}/${parsePath}/Js/${jsOutputFile}` : `${distFolder}/Skins/${themeName}/${jsOutputFile}`;
+  const destSuffix = parsePath ? `/${parsePath}/Js` : '';
   return targetPaths.reduce((stream, basePath) => {
-    return stream.pipe(dest(skinTarget(basePath)));
-  }, src(`${distFolder}/Skins/${themeName}/skin.js`, { encoding: false }));
+    return stream.pipe(dest(`${skinTarget(basePath)}${destSuffix}`));
+  }, src(srcPath, { encoding: false }));
 }
 
 /**

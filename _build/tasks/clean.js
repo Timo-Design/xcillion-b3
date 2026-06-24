@@ -19,7 +19,8 @@ function cleanDist() {
  * Clean dist skin folder
  */
 function cleanDistSkins() {
-  return del([`${distSkinPath()}/**`], { force: true });
+  const cleanGlobs = config.cleanSkinGlobs || ['**'];
+  return del(cleanGlobs.map(g => `${distSkinPath()}/${g}`), { force: true });
 }
 
 /**
@@ -33,7 +34,8 @@ function cleanDistContainers() {
  * Clean skin targets
  */
 function cleanSkins() {
-  const paths = targetPaths.map(p => skinTarget(p));
+  const cleanGlobs = config.cleanSkinGlobs || ['**'];
+  const paths = targetPaths.flatMap(p => cleanGlobs.map(g => `${skinTarget(p)}/${g}`));
   return del(paths, { force: true });
 }
 

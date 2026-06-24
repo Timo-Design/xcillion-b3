@@ -21,7 +21,9 @@ const less = require('gulp-less');
  * Build skins to dist
  */
 function buildSkinsToDist() {
-  return src('skin/**/*', { encoding: false })
+  const skinGlobs = (localConfig.skinGlobs || config.skinGlobs || ['**/*'])
+    .map(g => `skin/${g}`);
+  return src(skinGlobs, { base: 'skin', encoding: false })
     .pipe(dest(distSkinPath()));
 }
 
@@ -42,12 +44,14 @@ function buildScss() {
     return Promise.resolve();
   }
   const generatedFileWarning = config.generatedFileWarning || '';
+  const parsePath = localConfig.parsePath || config.parsePath || '';
+  const cssDestPath = parsePath ? `${distSkinPath()}/${parsePath}` : distSkinPath();
   return src('src/scss/skin.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(cleanCSS())
     .pipe(header(generatedFileWarning + '\n'))
     .pipe(rename('skin.css'))
-    .pipe(dest(distSkinPath()));
+    .pipe(dest(cssDestPath));
 }
 
 
@@ -60,6 +64,8 @@ function buildLess() {
     return Promise.resolve();
   }
   const generatedFileWarning = config.generatedFileWarning || '';
+  const parsePath = localConfig.parsePath || config.parsePath || '';
+  const cssDestPath = parsePath ? `${distSkinPath()}/${parsePath}` : distSkinPath();
   return src('src/less/skin.less')
     .pipe(less().on('error', function(err) {
       console.error(err.message);
@@ -68,7 +74,7 @@ function buildLess() {
     .pipe(cleanCSS())
     .pipe(header(generatedFileWarning + '\n'))
     .pipe(rename('skin.css'))
-    .pipe(dest(distSkinPath()));
+    .pipe(dest(cssDestPath));
 }
 
 /**
@@ -79,11 +85,15 @@ function buildJs() {
   const jsFiles = localConfig.jsFiles || config.jsFiles || ['src/js/**/*.js'];
   const generatedFileWarning = config.generatedFileWarning || '';
   
+  const jsOutputFile = localConfig.jsOutputFile || config.jsOutputFile || 'skin.js';
+  const parsePath = localConfig.parsePath || config.parsePath || '';
+  const destPath = parsePath ? `${distSkinPath()}/${parsePath}/Js` : distSkinPath();
+
   return src(jsFiles)
-    .pipe(concat('skin.js'))
+    .pipe(concat(jsOutputFile))
     .pipe(terser())
     .pipe(header(generatedFileWarning + '\n'))
-    .pipe(dest(distSkinPath()));
+    .pipe(dest(destPath));
 }
 
 /**
