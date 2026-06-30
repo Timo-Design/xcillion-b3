@@ -19,3 +19,4 @@ npm-debug.log*
 # Optional editor folders
 .vscode/
  
+/_build
