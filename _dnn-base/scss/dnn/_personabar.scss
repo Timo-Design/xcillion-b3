@@ -1,0 +1,15 @@
+// Use the hide-pb class to hide the persona bar if needed
+#Body{
+    &.pb-hidden{
+
+        margin-left: 0 !important;
+        width: 100vw;
+
+        .personabar-placeholder, #personaBar-iframe {
+
+            width:0 !important;
+            z-index: -1;
+        }
+
+    }
+}

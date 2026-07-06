@@ -1,0 +1,138 @@
+// Do not change colors in this file. 
+// Override the !default variables below instead in your xustom SCSS.
+// Either with your own values or with Bootstrap vars.
+
+$ff-panes-border: solid 1px #343a40 !default;
+$ff-panes-panes-bg: rgba(200, 200, 200, 0.2) !default;
+$ff-panes-panes-shadow: none !default;
+$ff-panes-module-bg: #fff !default;
+$ff-panes-module-footer-bg: rgba(255, 255, 255, 0.1) !default;
+$ff-panes-pane-border-color: #adb5bd !default;
+
+
+@mixin ff-panes-pane-border($border-color) {
+
+    border-right: solid 4px $border-color;
+}
+
+
+$ff-panes-module-border-color: #e9ecef !default;
+
+@mixin ff-panes-module-border($border-color) {
+
+    border-right: solid 4px $border-color;
+}
+
+$ff-panes-module-title-color: #adb5bd !default;
+$ff-panes-module-drag-bar-color: #dee2e6 !default;
+$ff-panes-module-drag-bar-bg: #fff !default;
+
+
+/* Styling of pane and module indications */
+@mixin InterfaceInlineText() {
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 0.2em 0.5em 0.5em;
+    text-transform: uppercase;
+
+    /* overrules DNN 9: */
+    position: relative;
+    background: transparent;
+    left: auto;
+    top: auto;
+    line-height: 1.2em;
+    height: auto;
+    opacity: 1;
+}
+
+
+
+/* Panes in Edit Mode */
+.dnnEditState {
+
+    .panes .pane-set {
+        padding-bottom: 1em;
+        padding-top: 1em;
+    }
+
+    // Adds a separator border between  pane-sets.
+    .panes .pane-set:not(:only-child) {
+        border-bottom: $ff-panes-border;
+    }
+
+    .DnnModule {
+        background: $ff-panes-module-bg;
+        @include ff-panes-module-border($ff-panes-module-border-color);
+
+    }
+
+    footer .DnnModule {
+        background: $ff-panes-module-footer-bg;
+    }
+
+    // Highlight the Pane
+    .dnnModuleManager {
+        background: $ff-panes-panes-bg;
+        margin-bottom: 1.5em;
+        padding-bottom: 1.8em;
+        @include ff-panes-pane-border($ff-panes-pane-border-color);
+
+        // Show the name of the pane
+        &:before {
+            content: "Pane: " attr(data-name);
+            display: block;
+            color: $ff-panes-module-title-color;
+            text-align: right;
+
+            @include InterfaceInlineText;
+            padding-bottom: 1em;
+        }
+    }
+
+}
+
+// Module drag bar
+.dnnDragHint {
+    color: $ff-panes-module-drag-bar-color;
+    background: $ff-panes-module-drag-bar-bg;
+
+
+    &:before {
+        content: "Module";
+        display: inline-block;
+
+        @include InterfaceInlineText;
+
+    }
+
+}
+
+
+
+@media screen and (min-width: 768px) {
+    .pane-expands {
+        position: relative;
+    }
+
+    .personabar-visible .pane-expands {
+        min-height: 200px;
+
+        &:after {
+            content: "#";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            margin-left: -10px;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid rgba(128, 128, 128, 0.5);
+            overflow: hidden;
+        }
+    }
+}
+
+.actionMenu {
+    display: block !important;
+}
